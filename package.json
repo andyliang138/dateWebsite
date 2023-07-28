@@ -8,12 +8,26 @@
     "start": "next start"
   },
   "dependencies": {
+    "@google-cloud/storage": "^6.12.0",
+    "@material-tailwind/react": "^2.0.5",
+    "cloudinary": "^1.38.0",
+    "deepai": "^1.0.21",
+    "formidable": "^3.5.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.5.1",
     "next": "^13.1.1",
+    "next-connect": "^1.0.0",
     "openai": "^3.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "tailwind": "^4.0.0"
   },
   "engines": {
     "node": ">=16"
+  },
+  "devDependencies": {
+    "@types/node": "20.4.1",
+    "@types/react": "18.2.14",
+    "typescript": "5.1.6"
   }
 }

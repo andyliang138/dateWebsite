@@ -1,0 +1,30 @@
+
+
+.about .row {
+  display: flex;
+}
+
+.about .column {
+  flex: 1;
+}
+
+.about .portrait {
+  width: 300px;
+  height: 380px;
+  border-radius: 50%;
+}
+
+.about .background {
+
+  padding-left: 100px;
+}
+
+/* about.module.css */
+
+.about .contentWrapper {
+  /* Add your desired styles here */
+  /* For example: */
+  margin-top: 90px;
+  padding: 20px;
+  background-color: #f0f0f0;
+}

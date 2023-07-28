@@ -1,10 +1,20 @@
 import Head from "next/head";
 import { useState } from "react";
 import styles from "./index.module.css";
+import Navbar from "./components/Navbar";
+
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
+  const [locationInput, setlocationInput] = useState("");
   const [result, setResult] = useState();
+  const [imageArray, setImageArray] = useState([]);
+  const [placesArray, setPlacesArray] = useState([]);
+  const [name, setName] = useState("");
+  const [finalname,setfinalName] = useState("");
+
+  const handleNameChange = (event) => {
+             setName(event.target.value)
+  };
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -14,7 +24,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({ animal: locationInput }),
       });
 
       const data = await response.json();
@@ -22,10 +32,14 @@ export default function Home() {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      setResult(data.result);
-      setAnimalInput("");
-    } catch(error) {
-      // Consider implementing your own error handling logic here
+      if (data.result) {
+        const temp = data.result.split(", ");
+        setPlacesArray(temp);
+        setResult(data.result);
+      }
+       setfinalName(name);
+      setlocationInput("");
+    } catch (error) {
       console.error(error);
       alert(error.message);
     }
@@ -34,24 +48,42 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>OpenAI Quickstart</title>
+        <title>Date Generator</title>
         <link rel="icon" href="/dog.png" />
       </Head>
-
+      <Navbar />
       <main className={styles.main}>
-        <img src="/dog.png" className={styles.icon} />
-        <h3>Name my pet</h3>
+
+        <img src="/hearts.jpg" className={styles.icon} />
+        <h3>I would like to go on a date with </h3>
+        <input type="text" value={name} onChange={handleNameChange} placeholder="Enter the name of your date"/>
+
+        <h3>Where do I go for a date?</h3>
+
         <form onSubmit={onSubmit}>
           <input
             type="text"
             name="animal"
-            placeholder="Enter an animal"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+            placeholder="Enter a city to begin your date!"
+            value={locationInput}
+            onChange={(e) => setlocationInput(e.target.value)}
           />
-          <input type="submit" value="Generate names" />
+          <input type="submit" value="Generate dates" />
         </form>
+
         <div className={styles.result}>{result}</div>
+
+        {placesArray.length > 0 && finalname && (
+          <div>
+            <h4>With {finalname}, you can:</h4>
+
+            <ul>
+              {placesArray.map((place) => (
+                <li key={place}>{place}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </main>
     </div>
   );
